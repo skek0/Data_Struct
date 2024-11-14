@@ -3,71 +3,48 @@
 using namespace std;
 
 template<typename T>
-class SingleLinkedList
+class DoubleLinkedList
 {
 private:
 	struct Node
 	{
 		T data;
+		Node* prev;
 		Node* next;
 		~Node()
 		{
 			cout << "deleted" << endl;
 		}
 	};
-
 	int size;
 	Node* head;
-//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+	Node* tail;
+
 public:
-	SingleLinkedList()
+	DoubleLinkedList()
 	{
 		size = 0;
 		head = nullptr;
+		tail = nullptr;
 	}
-
 	void PushFront(T data)
 	{
-		if (head != nullptr) 
-		{
-			Node* newNode = new Node;
-			newNode->data = data;
-			newNode->next = head;
-			head = newNode;
-			size++;
-		}
-		else
-		{
-			head = new Node;
-			head->data = data;
-			head->next = nullptr;
-			size++;
-		}
-	}
-	void PushBack(T data)
-	{
+		Node* newNode = new Node;
+		newNode->data = data;
+		newNode->prev = nullptr;
+		newNode->next = nullptr;
+
 		if (head != nullptr)
 		{
-			Node* newNode = new Node;
-			newNode->data = data;
-			newNode->next = nullptr;
+			newNode->next = head;
+			head->prev = newNode;
 
-			Node* temp = head;
-			while (temp->next != nullptr)
-			{
-				temp = temp->next;
-			}
-
-			temp->next = newNode;
-
-			size++;
+			head = head->prev;
 		}
 		else
 		{
-			head = new Node;
-			head->data = data;
-			head->next = nullptr;
-			size++;
+			head = newNode;
+			tail = newNode;
 		}
 	}
 	void PopFront()
@@ -75,8 +52,18 @@ public:
 		if (head != nullptr)
 		{
 			Node* deleteNode = head;
-			head = head->next;
+			if (head != tail)
+			{
+				head = head->next;
+				head->prev = nullptr;
+			}
+			else
+			{
+				head = nullptr;
+				tail = nullptr;
+			}
 			delete deleteNode;
+
 			size--;
 		}
 		else
@@ -84,74 +71,36 @@ public:
 			cout << "NO DATA" << endl;
 		}
 	}
-	void PopBack()
-	{
-		if (head != nullptr)
-		{
-			if (head->next != nullptr)
-			{
-				Node* deleteNode = head;
-				Node* prev = nullptr;
-				while (deleteNode->next != nullptr)
-				{
-					prev = deleteNode;
-					deleteNode = deleteNode->next;
-				}
-				prev->next = nullptr;
-				delete deleteNode;
-				size--;
-			}
-			else
-			{
-				Node* deleteNode = head;
-				head = head->next;
-				delete deleteNode;
-			}
-		}
-		else
-		{
-			cout << "NO DATA" << endl;
-		}
-	}
-	void Show()
+
+	void ShowByFront()
 	{
 		Node* temp = head;
 		while (temp != nullptr)
 		{
-			cout << temp->data << " "; 
+			cout << temp->data << endl;
 			temp = temp->next;
 		}
-		cout << endl;
 	}
-	//~SingleLinkedList()
-	//{
-	//	Node* curr = head;
-	//	Node* prev;
-	//	while (curr->next != nullptr)
-	//	{
-	//		prev = curr;
-	//		curr = curr->next;
-	//		delete prev;
-	//	}
-	//	delete curr;
-	//}
+	void ShowByBack()
+	{
+		Node* temp = tail;
+		while (temp != nullptr)
+		{
+			cout << temp->data << endl;
+			temp = temp->prev;
+		}
+	}
 };
 
 int main()
 {
-	SingleLinkedList<int> singleLinkedList;
-	singleLinkedList.PushFront(10);
-	singleLinkedList.PushFront(20);
-	singleLinkedList.PushBack(5);
-	singleLinkedList.PushBack(0);
+	DoubleLinkedList<int> doubleLinkedlist;
 
-	singleLinkedList.Show();
+	doubleLinkedlist.PushFront(10);
+	doubleLinkedlist.PushFront(20);
 
-	singleLinkedList.PopBack();
-	singleLinkedList.PopBack();
-	singleLinkedList.PopBack();
-	singleLinkedList.PopBack();
-	singleLinkedList.PopBack();
-
+	doubleLinkedlist.PopFront();
+	doubleLinkedlist.PopFront();
+	
 	return 0;
 }
