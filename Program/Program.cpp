@@ -1,30 +1,64 @@
 ﻿#include <iostream>
-#define SIZE 10
+#define SIZE 5
 
 using namespace std;
 
 template<typename T>
-class Stack
+class LinearQueue
 {
 private:
+	int front;
+	int rear;
+	int size;
 	T container[SIZE];
-	int top;
-
 public:
-	Stack()
+	LinearQueue()
 	{
-		top = -1;
-
+		front = 0;
+		rear = 0;
+		size = 0;
 		for (int i = 0; i < SIZE; i++)
 		{
-			container[i] = 0;
+			container[i] = NULL;
+		}
+	}
+	void Push(T data)
+	{
+		if (rear < SIZE)
+		{
+			container[rear++] = data;
+			size++;
+		}
+		else
+		{
+			cout << "Queue overflow" << endl;
+		}
+	}
+	void Pop()
+	{
+		if (front < rear)
+		{
+			container[front++] = NULL;
+			size--;
+		}
+		else
+		{
+			cout << "NO DATA" << endl;
 		}
 	}
 };
 
 int main()
 {
-	Stack<int> stack;
+	LinearQueue<int> linearQueue;
+
+	linearQueue.Push(10);
+	linearQueue.Push(20);
+	linearQueue.Push(30);
+	linearQueue.Push(40);
+	linearQueue.Push(50);
+
+	linearQueue.Pop();
 
 	return 0;
 }
