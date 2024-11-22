@@ -1,92 +1,114 @@
 ﻿#include <iostream>
-#define SIZE 5
 
 using namespace std;
 
 template<typename T>
-class CircularQueue
+class Vector
 {
 private:
+	T* container;
 	int size;
-	int front;
-	int rear;
-	T container[SIZE];
-
+	int capacity;
 public:
-	CircularQueue()
+	Vector()
 	{
+		container = nullptr;
 		size = 0;
-		front = SIZE - 1;
-		rear = SIZE - 1;
+		capacity = 0;
+	}
+	void ReSize(int newSize)
+	{
+		// 1. capacity에 새로운 size값 저장
+		capacity = newSize;
 
-		for (int i = 0; i < SIZE; i++)
+		// 2. 새로운 포인터 변수를 선언
+		T* newContainer = new T[capacity];
+
+		// 3. 새로운 메모리 공간 값들 초기화
+		for (int i = 0; i < capacity; i++)
 		{
-			container[i] = NULL;
+			newContainer[i] = NULL;
 		}
+
+		// 4. 기존 배열의 값을 복사해오기
+		if (container != nullptr)
+		{
+			for (int i = 0; i < size; i++)
+			{
+				newContainer[i] = container[i];
+			}
+		// 5. 기존 배열 메모리 해제
+			delete[] container;
+		}
+		// 6. 기존 배열을 가리키던 포인터 변수를 새 배열로 옮김
+		container = newContainer;
 	}
-	bool IsEmpty()
+	void PushBack(T data)
 	{
-		if (front == rear)
+		if (container != nullptr)
 		{
-			return true;
-		}
-		return false;
-	}
-	void Push(T data)
-	{
-		if (front != (rear + 1) % SIZE)
-		{
-			rear = (rear + 1) % SIZE;
-			container[rear] = data;
-			size++;
-		}
-		else //front-rear == 1
-		{
-			cout << "CIRCLEQUEUE FULL!" << endl;
-		}
-	}
-	void Pop()
-	{
-		if (!IsEmpty())
-		{
-			front = ++front % SIZE;
+			if (size >= capacity)
+			{
+				ReSize(capacity * 2);
+			}
 		}
 		else
 		{
-			cout << "CIRCLEQUEUE EMPTY!" << endl;
+			ReSize(1);
 		}
+		container[size++] = data;
+	}
+	void PopBack()
+	{
+		if (container != nullptr && size > 0)
+		{
+			container[--size] = NULL;
+		}
+		else
+		{
+			cout << "Vector is Empty!" << endl;
+		}
+	}
+	void Reserve(int newSize)
+	{
+		ReSize(newSize);
+		cout << "Reserved " << newSize << endl;
 	}
 	int& Size()
 	{
 		return size;
 	}
-	T& Front()
+	T & operator [](int i)
 	{
-		return container[(front + 1) % SIZE];
+		return container[i];
+	}
+
+	~Vector()
+	{
+		if (container != nullptr)
+		{
+			delete[] container;
+		}
 	}
 };
 
 int main()
 {
-	CircularQueue<char> circleQueue;
+	Vector<int> vector;
 
-	circleQueue.Push('A');
-	circleQueue.Push('B');
-	circleQueue.Push('C');
-	circleQueue.Push('D');
-	circleQueue.Pop();
-	circleQueue.Pop();
-	circleQueue.Pop();
-	circleQueue.Pop();
-	circleQueue.Push('E');
-	circleQueue.Push('F');
-	circleQueue.Push('G');
-	circleQueue.Push('H');
+	vector.Reserve(4);
 
-	while (!circleQueue.IsEmpty())
+	vector.PushBack(10);
+	vector.PushBack(20);
+	vector.PushBack(30);
+	vector.PushBack(40);
+	vector.PushBack(50);
+	vector.PopBack();
+	vector.PopBack();
+
+	for (int i = 0; i < vector.Size(); i++)
 	{
-		cout << circleQueue.Front() << endl;
-		circleQueue.Pop();
+		cout << vector[i] << endl;
 	}
 
 	return 0;
