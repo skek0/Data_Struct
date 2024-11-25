@@ -2,91 +2,69 @@
 
 using namespace std;
 
-template<typename T>
-class Vector
+class String
 {
 private:
-	T* container;
 	int size;
-	int capacity;
+	char* container;
+
 public:
-	Vector()
+	String()
 	{
-		container = nullptr;
 		size = 0;
-		capacity = 0;
+		container = nullptr;
 	}
-	void ReSize(int newSize)
+
+	char* operator = (const char* word)
 	{
-		// 1. capacity에 새로운 size값 저장
-		capacity = newSize;
-
-		// 2. 새로운 포인터 변수를 선언
-		T* newContainer = new T[capacity];
-
-		// 3. 새로운 메모리 공간 값들 초기화
-		for (int i = 0; i < capacity; i++)
+		/*if (container == nullptr)
 		{
-			newContainer[i] = NULL;
-		}
+			int arraysize = sizeof(word)+1;
+			size = arraysize - 1;
+			container = new char[arraysize];
 
-		// 4. 기존 배열의 값을 복사해오기
-		if (container != nullptr)
+			return container;
+		}*/
+		int arraySize = strlen(word) +1;
+
+		size = strlen(word);
+
+		if(container == nullptr)
 		{
-			for (int i = 0; i < size; i++)
+			container = new char[arraySize];
+			for(int i = 0; i < arraySize; i++)
 			{
-				newContainer[i] = container[i];
+				container[i] = word[i];
 			}
-		// 5. 기존 배열 메모리 해제
+		}
+		else
+		{
+			char* newContainer = new char[arraySize];
+			for (int i = 0; i < arraySize; i++)
+			{
+				newContainer[i] = word[i];
+			}
 			delete[] container;
+			container = newContainer;
 		}
-		// 6. 기존 배열을 가리키던 포인터 변수를 새 배열로 옮김
-		container = newContainer;
-	}
-	void PushBack(T data)
-	{
-		if (container != nullptr)
-		{
-			if (size >= capacity)
-			{
-				ReSize(capacity * 2);
-			}
-		}
-		else
-		{
-			ReSize(1);
-		}
-		container[size++] = data;
-	}
-	void PopBack()
-	{
-		if (container != nullptr && size > 0)
-		{
-			container[--size] = NULL;
-		}
-		else
-		{
-			cout << "Vector is Empty!" << endl;
-		}
-	}
-	void Reserve(int newSize)
-	{
-		ReSize(newSize);
-		cout << "Reserved " << newSize << endl;
+
+		return container;
+		
 	}
 	int& Size()
 	{
 		return size;
 	}
-	T & operator [](int i)
+	char operator [ ](const int& index)
 	{
-		return container[i];
+		return container[index];
 	}
 
-	~Vector()
+	~String()
 	{
-		if (container != nullptr)
+		if (container != nullptr) 
 		{
+			size = 0;
 			delete[] container;
 		}
 	}
@@ -94,22 +72,19 @@ public:
 
 int main()
 {
-	Vector<int> vector;
-
-	vector.Reserve(4);
-
-	vector.PushBack(10);
-	vector.PushBack(20);
-	vector.PushBack(30);
-	vector.PushBack(40);
-	vector.PushBack(50);
-	vector.PopBack();
-	vector.PopBack();
-
-	for (int i = 0; i < vector.Size(); i++)
+	String string;
+	string = "janna";
+	for (int i = 0; i < string.Size(); i++)
 	{
-		cout << vector[i] << endl;
+		cout << string[i];
 	}
+	cout << endl;
+	string = "Bard";
+	for (int i = 0; i < string.Size(); i++)
+	{
+		cout << string[i];
+	}
+	cout << endl;
 
 	return 0;
 }
