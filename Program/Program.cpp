@@ -1,57 +1,83 @@
 ﻿#include <iostream>
 
 using namespace std;
+#define SIZE 6
 
-struct Node
+template<typename KEY, typename VALUE>
+class HashTable
 {
-	int data;
-	Node* left;
-	Node* right;
+	struct Node
+	{
+		KEY key;
+		VALUE value;
+		Node* next;
+	};
+	struct Bucket
+	{
+		int count;
+		Node* head;
+	};
+	Bucket bucket[SIZE];
+public:
+	HashTable()
+	{
+		for (int i = 0; i < SIZE; i++)
+		{
+			bucket[i].count = 0;
+			bucket[i].head = nullptr;
+		}
+	}
+
+	template<typename T>
+	int HashFunction(T key)
+	{
+		return (int)key % SIZE;
+	}
+	template<>
+	int HashFunction(std::string key)
+	{
+		int sum = 0;
+		for (int i = 0; i < key.length(); i++)
+		{
+			sum += key[i];
+		}
+		return sum % SIZE;
+	}
+	Node* CreateNode(KEY key, VALUE value)
+	{
+		Node* newNode = new Node;
+		newNode->key = key;
+		newNode->value = value;
+		newNode->next = nullptr;
+
+		return newNode;
+	}
+
+	void Insert(KEY key, VALUE value)
+	{
+		int _key = HashFunction(key);
+		Node* newNode = CreateNode(key, value);
+
+		if (bucket[_key].head != nullptr)
+		{
+			newNode->next = bucket[_key].head;
+			bucket[_key].head = newNode;
+		}
+		else // bucket[_key].head == nullptr
+		{
+			bucket[_key].head = newNode;
+		}
+		bucket[_key].count++;
+	}
 };
-
-Node* CreateNode(int data, Node* left, Node* right)
-{
-	Node* newNode = new Node;
-	newNode->data = data;
-	newNode->left = left;
-	newNode->right = right;
-
-	return newNode;
-}
-void PreOrder(Node* root)
-{
-	cout << root->data << " ";
-	if (root->left != nullptr)PreOrder(root->left);
-	if (root->right!= nullptr)PreOrder(root->right);
-}
-void InOrder(Node* root)
-{
-	if (root->left != nullptr)InOrder(root->left);
-	cout << root->data << " ";
-	if (root->right != nullptr)InOrder(root->right);
-}
-void PostOrder(Node* root)
-{
-	if (root->left != nullptr)PostOrder(root->left);
-	if (root->right != nullptr)PostOrder(root->right);
-	cout << root->data << " ";
-}
 
 int main()
 {
-	Node* node5 = CreateNode(5, nullptr, nullptr);
-	Node* node4 = CreateNode(4, nullptr, nullptr);
-	Node* node3 = CreateNode(3, nullptr, nullptr);
-	Node* node2 = CreateNode(2, node4, node5);
-	Node* node1 = CreateNode(1, node2, node3);
+	HashTable<int, int> table;
 
-	//PreOrder(node1);
-	//cout << endl;
-	//InOrder(node1);
-	//cout << endl;
-	//PostOrder(node1);
-
-	
+	table.Insert(3, 10);
+	table.Insert(3, 20);
+	table.Insert(3, 30);
 
 	return 0;
 }
