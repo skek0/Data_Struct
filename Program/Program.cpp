@@ -1,155 +1,75 @@
 ﻿#include <iostream>
 
 using namespace std;
-#define SIZE 6
+#define SIZE 8
 
-template<typename KEY, typename VALUE>
-class HashTable
+template<typename T>
+class Heap
 {
-	struct Node
-	{
-		KEY key;
-		VALUE value;
-		Node* next;
-	};
-	struct Bucket
-	{
-		int count;
-		Node* head;
-	};
-	Bucket bucket[SIZE];
+private:
+	int index;
+	T container[SIZE];
 public:
-	HashTable()
+	Heap()
 	{
+		index = 0;
 		for (int i = 0; i < SIZE; i++)
 		{
-			bucket[i].count = 0;
-			bucket[i].head = nullptr;
+			container[i] = 0;
 		}
 	}
-
-	template<typename T>
-	int HashFunction(T key)
+	void Insert(T data)
 	{
-		return (int)key % SIZE;
-	}
-	template<>
-	int HashFunction(std::string key)
-	{
-		int sum = 0;
-		for (int i = 0; i < key.length(); i++)
+		if (index >= SIZE - 1)
 		{
-			sum += key[i];
-		}
-		return sum % SIZE;
-	}
-	Node* CreateNode(KEY key, VALUE value)
-	{
-		Node* newNode = new Node;
-		newNode->key = key;
-		newNode->value = value;
-		newNode->next = nullptr;
-
-		return newNode;
-	}
-	void Insert(KEY key, VALUE value)
-	{
-		int _key = HashFunction(key);
-		Node* newNode = CreateNode(key, value);
-
-		if (bucket[_key].head != nullptr)
-		{
-			newNode->next = bucket[_key].head;
-		}
-		bucket[_key].head = newNode;
-		bucket[_key].count++;
-	}
-	void Print()
-	{
-		Node* currentNode;
-		for (int i = 0; i < SIZE; i++)
-		{
-			currentNode = bucket[i].head;
-
-			cout <<	"[" << i << "]" ;
-
-			while (currentNode != nullptr)
-			{
-				cout << currentNode->key << " " << currentNode->value;
-				currentNode = currentNode->next;
-				if (currentNode != nullptr) cout << "->";
-			}
-			cout << endl;
-		}
-	}
-	void Remove(KEY key)
-	{
-		int _key = HashFunction(key);
-		if (bucket[_key].head != nullptr)
-		{
-			Node* currentNode = bucket[_key].head;
-			Node* previousNode = nullptr;
-
-			while (currentNode->key != key)
-			{
-				previousNode = currentNode;
-				currentNode = currentNode->next;
-				if (currentNode == nullptr)
-				{
-					cout << "KEY NOT FOUND" << endl;
-					return;
-				}
-			}
-			previousNode->next = currentNode->next;
-			currentNode->next = nullptr;
-			delete currentNode;
-			bucket[_key].count--;
-		}
-		else //bucket[HashedKey] == nullptr)
-		{
-			cout << "KEY NOT FOUND" << endl;
+			cout << "Heap Full!" << endl;
 			return;
 		}
+		container[++index] = data;
+		
+		int child = index;
+		int parent = index / 2;
+		while (parent >= 1)
+		{
+			if (container[child] > container[parent])
+			{
+				std::swap(container[child], container[parent]);
+				child = parent;
+				parent = child / 2;
+			}
+			else break;
+		}
+	}
+	T Remove()
+	{
+		T result = container[1];
+
+		container[1] = container[index];
+		container[index--] = NULL;
+
+		
+
+		return result;
 	}
 
-	~HashTable()
+	void Print()
 	{
-		Node* deleteNode;
-		Node* nextNode;
-		for (int i = 0; i < SIZE; i++)
+		for (int i = 1; i <= index; i++)
 		{
-			if (bucket[i].head != nullptr)
-			{
-				deleteNode = bucket[i].head;
-				nextNode = bucket[i].head;
-
-				while(nextNode != nullptr)
-				{
-					nextNode = nextNode->next;
-					delete deleteNode;
-					deleteNode = nextNode;
-				}
-			}
+			cout << container[i] << " ";
 		}
 	}
 };
 
 int main()
 {
-	HashTable<int, std::string> table;
+	Heap<int> heap;
 
-	table.Insert(10, "ten");
-	table.Insert(20, "twenty");
-	table.Insert(30, "thirty");
-	table.Insert(40, "forty");
+	heap.Insert(5);
+	heap.Insert(7);
+	heap.Insert(9);
+	heap.Insert(15);
 
-	table.Print();
-
-	table.Remove(2);
-	table.Remove(20);
-	table.Remove(20);
-
-	table.Print();
-
+	heap.Print();
 	return 0;
 }
