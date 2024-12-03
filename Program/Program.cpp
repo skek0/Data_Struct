@@ -1,75 +1,42 @@
 ﻿#include <iostream>
 
 using namespace std;
-#define SIZE 8
+#define SIZE 10
 
 template<typename T>
-class Heap
+class AdjacentMatrix
 {
 private:
-	int index;
-	T container[SIZE];
+	int vertexAmount;
+	T vertexes[SIZE];
+	int matrix[SIZE][SIZE];
 public:
-	Heap()
+	AdjacentMatrix()
 	{
-		index = 0;
+		vertexAmount = 0;
 		for (int i = 0; i < SIZE; i++)
 		{
-			container[i] = 0;
+			vertexes[i] = NULL;
 		}
-	}
-	void Insert(T data)
-	{
-		if (index >= SIZE - 1)
+		for (int i = 0; i < SIZE; i++)
 		{
-			cout << "Heap Full!" << endl;
-			return;
-		}
-		container[++index] = data;
-		
-		int child = index;
-		int parent = index / 2;
-		while (parent >= 1)
-		{
-			if (container[child] > container[parent])
+			for (int j = 0; j < SIZE; j++)
 			{
-				std::swap(container[child], container[parent]);
-				child = parent;
-				parent = child / 2;
+				matrix[i][j] = 0;
 			}
-			else break;
-		}
-	}
-	T Remove()
-	{
-		T result = container[1];
-
-		container[1] = container[index];
-		container[index--] = NULL;
-
-		
-
-		return result;
-	}
-
-	void Print()
-	{
-		for (int i = 1; i <= index; i++)
-		{
-			cout << container[i] << " ";
 		}
 	}
 };
 
 int main()
 {
-	Heap<int> heap;
+	/*
+		A	B	C	D
+	A	0	1	0	1
+	B	0	0	1	1
+	C	0	0	0	1
+	D	0	0	0	0
+	*/
 
-	heap.Insert(5);
-	heap.Insert(7);
-	heap.Insert(9);
-	heap.Insert(15);
-
-	heap.Print();
 	return 0;
 }
