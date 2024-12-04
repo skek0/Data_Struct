@@ -4,25 +4,54 @@ using namespace std;
 #define SIZE 10
 
 template<typename T>
-class AdjacentMatrix
+class AdjacentList
 {
 private:
-	int vertexAmount;
-	T vertexes[SIZE];
-	int matrix[SIZE][SIZE];
-public:
-	AdjacentMatrix()
+	struct Node
 	{
-		vertexAmount = 0;
+		T data;
+		Node* next;
+
+		Node(T data, Node* link = nullptr)
+		{
+			this->data = data;
+			next = link;
+		}
+	};
+	int count;
+	T vertexes[SIZE];
+	Node* list[SIZE];
+public:
+	AdjacentList()
+	{
+		count = 0;
+
 		for (int i = 0; i < SIZE; i++)
 		{
+			list[i] = NULL;
 			vertexes[i] = NULL;
 		}
+	}
+
+	void Insert(T data)
+	{
+		if (count < SIZE)
+		{
+			vertexes[count++] = data;
+		}
+		else
+		{
+			cout << "Adjacent List FULL!" << endl;
+		}
+	}
+	
+	~AdjacentList()
+	{
 		for (int i = 0; i < SIZE; i++)
 		{
-			for (int j = 0; j < SIZE; j++)
+			if (list[i] != nullptr) 
 			{
-				matrix[i][j] = 0;
+				delete[] list[i];
 			}
 		}
 	}
@@ -30,13 +59,8 @@ public:
 
 int main()
 {
-	/*
-		A	B	C	D
-	A	0	1	0	1
-	B	0	0	1	1
-	C	0	0	0	1
-	D	0	0	0	0
-	*/
+	AdjacentList<char> ajList;
+
 
 	return 0;
 }
