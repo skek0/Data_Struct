@@ -29,6 +29,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Class11th (Heap)", "..\Clas
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Class12th (Adjacent Matrix)", "..\Class12th (Adjacent Matrix)\Class12th (Adjacent Matrix).vcxproj", "{A4A4F46E-3CCE-469A-BF38-9EB1D496533A}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Class13th (Adjacent List)", "..\Class13th (Adjacent List)\Class13th (Adjacent List).vcxproj", "{1F27182F-53E0-41EB-A481-B75B3749EC56}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -141,6 +143,14 @@ Global
 		{A4A4F46E-3CCE-469A-BF38-9EB1D496533A}.Release|x64.Build.0 = Release|x64
 		{A4A4F46E-3CCE-469A-BF38-9EB1D496533A}.Release|x86.ActiveCfg = Release|Win32
 		{A4A4F46E-3CCE-469A-BF38-9EB1D496533A}.Release|x86.Build.0 = Release|Win32
+		{1F27182F-53E0-41EB-A481-B75B3749EC56}.Debug|x64.ActiveCfg = Debug|x64
+		{1F27182F-53E0-41EB-A481-B75B3749EC56}.Debug|x64.Build.0 = Debug|x64
+		{1F27182F-53E0-41EB-A481-B75B3749EC56}.Debug|x86.ActiveCfg = Debug|Win32
+		{1F27182F-53E0-41EB-A481-B75B3749EC56}.Debug|x86.Build.0 = Debug|Win32
+		{1F27182F-53E0-41EB-A481-B75B3749EC56}.Release|x64.ActiveCfg = Release|x64
+		{1F27182F-53E0-41EB-A481-B75B3749EC56}.Release|x64.Build.0 = Release|x64
+		{1F27182F-53E0-41EB-A481-B75B3749EC56}.Release|x86.ActiveCfg = Release|Win32
+		{1F27182F-53E0-41EB-A481-B75B3749EC56}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

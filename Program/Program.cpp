@@ -1,66 +1,114 @@
 ﻿#include <iostream>
 
 using namespace std;
-#define SIZE 10
 
 template<typename T>
-class AdjacentList
+class BinarySearchTree
 {
 private:
 	struct Node
 	{
 		T data;
-		Node* next;
-
-		Node(T data, Node* link = nullptr)
-		{
-			this->data = data;
-			next = link;
-		}
+		Node* left;
+		Node* right;
 	};
-	int count;
-	T vertexes[SIZE];
-	Node* list[SIZE];
+	Node* root;
 public:
-	AdjacentList()
+	BinarySearchTree()
 	{
-		count = 0;
-
-		for (int i = 0; i < SIZE; i++)
-		{
-			list[i] = NULL;
-			vertexes[i] = NULL;
-		}
+		root = nullptr;
 	}
 
+	Node* RootNode()
+	{
+		return root;
+	}
+	Node* CreateNode(T data)
+	{
+		Node * newNode = new Node();
+		newNode->data = data;
+		newNode->left = nullptr;
+		newNode->right = nullptr;
+
+		return newNode;
+	}
 	void Insert(T data)
 	{
-		if (count < SIZE)
+		if (root != nullptr)
 		{
-			vertexes[count++] = data;
-		}
-		else
-		{
-			cout << "Adjacent List FULL!" << endl;
-		}
-	}
-	
-	~AdjacentList()
-	{
-		for (int i = 0; i < SIZE; i++)
-		{
-			if (list[i] != nullptr) 
+			Node* currentNode = root;
+			while (currentNode != nullptr)
 			{
-				delete[] list[i];
+				if (currentNode->data > data)
+				{
+					if (currentNode->left == nullptr)
+					{
+						currentNode->left = CreateNode(data);
+						break;
+					}
+					else
+					{
+						currentNode = currentNode->left;
+					}
+				}
+				else if(currentNode->data < data)
+				{
+					if (currentNode->right == nullptr)
+					{
+						currentNode->right = CreateNode(data);
+						break;
+					}
+					else
+					{
+						currentNode = currentNode->right;
+					}
+				}
+				else /* currentNode->data == data */return;
 			}
 		}
+		else // root == nullptr
+		{
+			root = CreateNode(data);
+		}
+	}
+	void Inorder(Node* node)
+	{
+		if (node->left != nullptr) Inorder(node->left);
+		cout << node->data << " ";
+		if (node->right != nullptr) Inorder(node->right);
+	}
+	void Print()
+	{
+		Node* currentNode = root;
+		if (currentNode != nullptr)
+		{
+			Inorder(currentNode);
+		}
+		else cout << "BinarySearchTree is Empty!" << endl;
+	}
+	void Destroy(Node* node)
+	{
+		if (node->left != nullptr) Destroy(node->left);
+		if (node->right != nullptr) Destroy(node->right);
+		delete node;
+	}
+
+	~BinarySearchTree()
+	{
+		Destroy(root);
 	}
 };
 
 int main()
 {
-	AdjacentList<char> ajList;
+	BinarySearchTree<int> bnsTree;
 
+	bnsTree.Insert(15);
+	bnsTree.Insert(7);
+	bnsTree.Insert(9);
+	bnsTree.Insert(20);
+
+	bnsTree.Print();
 
 	return 0;
 }
