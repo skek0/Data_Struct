@@ -31,6 +31,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Class12th (Adjacent Matrix)
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Class13th (Adjacent List)", "..\Class13th (Adjacent List)\Class13th (Adjacent List).vcxproj", "{1F27182F-53E0-41EB-A481-B75B3749EC56}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Class14th (Binary Search Tree)", "..\Class14th (Binary Search Tree)\Class14th (Binary Search Tree).vcxproj", "{458EE006-4EAE-46CA-A729-B9E19CF016EB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -151,6 +153,14 @@ Global
 		{1F27182F-53E0-41EB-A481-B75B3749EC56}.Release|x64.Build.0 = Release|x64
 		{1F27182F-53E0-41EB-A481-B75B3749EC56}.Release|x86.ActiveCfg = Release|Win32
 		{1F27182F-53E0-41EB-A481-B75B3749EC56}.Release|x86.Build.0 = Release|Win32
+		{458EE006-4EAE-46CA-A729-B9E19CF016EB}.Debug|x64.ActiveCfg = Debug|x64
+		{458EE006-4EAE-46CA-A729-B9E19CF016EB}.Debug|x64.Build.0 = Debug|x64
+		{458EE006-4EAE-46CA-A729-B9E19CF016EB}.Debug|x86.ActiveCfg = Debug|Win32
+		{458EE006-4EAE-46CA-A729-B9E19CF016EB}.Debug|x86.Build.0 = Debug|Win32
+		{458EE006-4EAE-46CA-A729-B9E19CF016EB}.Release|x64.ActiveCfg = Release|x64
+		{458EE006-4EAE-46CA-A729-B9E19CF016EB}.Release|x64.Build.0 = Release|x64
+		{458EE006-4EAE-46CA-A729-B9E19CF016EB}.Release|x86.ActiveCfg = Release|Win32
+		{458EE006-4EAE-46CA-A729-B9E19CF016EB}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
